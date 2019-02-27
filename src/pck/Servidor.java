@@ -9,7 +9,13 @@ public class Servidor extends Thread{
 	}
 	public void run(){
 		
-		while(!buffer.listaMensajes.isEmpty()) buffer.sacarMesaje(this.id);
+		while(!buffer.listaMensajes.isEmpty())
+			try {
+				buffer.sacarMesaje(this.id);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 }

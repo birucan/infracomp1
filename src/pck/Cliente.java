@@ -20,21 +20,24 @@ public class Cliente extends Thread{
 	 */
 	public void run(){
 		generarMensajes();
-		System.out.println("El Cliente con id #"+id+" envia los mensajes");
-		
 		while(!mensajes.isEmpty()){
 			Mensaje m = mensajes.pop();
-			System.out.println("    mensaje con valor: "+m.getMensaje());
-			buffer.meterMensaje(m);
-			
-			
+			try {
+				buffer.meterMensaje(m);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("El Cliente con id "+id+" envia el mensaje: "+m.getMensaje());
 		}
+		
 			
 	}
 	
 	private void generarMensajes (){
 
-		short numeroMensajes =  (short) ((short) (Math.random()*10)+1);
+		short numeroMensajes =  (short) ((short) (Math.random()*5)+1);
+		numeroMensajes ++;
 		for (int i = 0; i < numeroMensajes; i++) {
 			Mensaje nMen = new Mensaje((short) (Math.random()*1000), id);
 			mensajes.push(nMen);
